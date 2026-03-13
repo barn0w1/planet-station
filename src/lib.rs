@@ -37,13 +37,7 @@ pub fn run() {
             }),
     );
 
-    // WASM is single-threaded — restrict task pools to avoid panics
-    #[cfg(target_arch = "wasm32")]
-    app.insert_resource(bevy::core::TaskPoolOptions {
-        min_total_threads: 1,
-        max_total_threads: 1,
-        ..default()
-    });
+    // WASM is single-threaded; Bevy handles this automatically via cfg flags.
 
     app
         // Global ambient light (pale blue)

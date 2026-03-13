@@ -364,7 +364,7 @@ fn setup_station(
     commands.spawn((
         PbrBundle {
             mesh: meshes.add(
-                shape::Capsule { radius: 0.5, depth: 1.5, rings: 4, latitudes: 8, longitudes: 12, uv_profile: shape::CapsuleUvProfile::Aspect }.into(),
+                shape::Capsule { radius: 0.5, depth: 1.5, ..default() }.into(),
             ),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.9, 0.92, 0.95),

@@ -67,24 +67,22 @@ pub fn transparent_material(
 /// Low-poly sphere (icosphere-like via UVSphere with low resolution)
 pub fn low_poly_sphere(meshes: &mut Assets<Mesh>, radius: f32) -> Handle<Mesh> {
     meshes.add(
-        shape::UVSphere {
+        Mesh::from(shape::UVSphere {
             radius,
             sectors: 8,
             stacks: 6,
-        }
-        .into(),
+        }),
     )
 }
 
 /// Smooth sphere
 pub fn smooth_sphere(meshes: &mut Assets<Mesh>, radius: f32) -> Handle<Mesh> {
     meshes.add(
-        shape::UVSphere {
+        Mesh::from(shape::UVSphere {
             radius,
             sectors: 32,
             stacks: 16,
-        }
-        .into(),
+        }),
     )
 }
 
@@ -96,25 +94,23 @@ pub fn cylinder_mesh(
     resolution: u32,
 ) -> Handle<Mesh> {
     meshes.add(
-        shape::Cylinder {
+        Mesh::from(shape::Cylinder {
             radius,
             height,
             resolution,
             segments: 1,
-        }
-        .into(),
+        }),
     )
 }
 
 /// Flat disc (thin cylinder)
 pub fn disc_mesh(meshes: &mut Assets<Mesh>, radius: f32) -> Handle<Mesh> {
     meshes.add(
-        shape::Cylinder {
+        Mesh::from(shape::Cylinder {
             radius,
             height: 0.1,
             resolution: 16,
             segments: 1,
-        }
-        .into(),
+        }),
     )
 }

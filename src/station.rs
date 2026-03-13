@@ -6,7 +6,7 @@ use crate::assets::palette;
 
 const PLAYER_SPEED: f32 = 8.0;
 const GRAVITY_SCALE: f32 = 0.3;    // low-gravity feel
-const INTERACT_RANGE: f32 = 5.0;
+pub const INTERACT_RANGE: f32 = 5.0;
 
 // ── Components ────────────────────────────────────────────────────────────────
 
@@ -104,7 +104,7 @@ fn setup_station(
     // ── Central hub (large sphere r=8) ───────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 8.0, sectors: 16, stacks: 12 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 8.0, sectors: 16, stacks: 12 })),
             material: station_white_mat.clone(),
             transform: Transform::from_translation(base),
             ..default()
@@ -115,7 +115,7 @@ fn setup_station(
     // ── Observation dome (hemisphere top) ────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 5.0, sectors: 12, stacks: 6 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 5.0, sectors: 12, stacks: 6 })),
             material: dome_mat,
             transform: Transform::from_translation(base + Vec3::new(0.0, 10.0, 0.0)),
             ..default()
@@ -139,7 +139,7 @@ fn setup_station(
         commands.spawn((
             PbrBundle {
                 mesh: meshes.add(
-                    shape::Cylinder { radius: 2.0, height: 20.0, resolution: 10, segments: 1 }.into(),
+                    Mesh::from(shape::Cylinder { radius: 2.0, height: 20.0, resolution: 10, segments: 1 }),
                 ),
                 material: station_white_mat.clone(),
                 transform: Transform::from_translation(arm_center).with_rotation(
@@ -154,7 +154,7 @@ fn setup_station(
         // Habitat pod (sphere at end)
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::UVSphere { radius: 4.0, sectors: 12, stacks: 8 }.into()),
+                mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 4.0, sectors: 12, stacks: 8 })),
                 material: station_white_mat.clone(),
                 transform: Transform::from_translation(pod_center),
                 ..default()
@@ -167,7 +167,7 @@ fn setup_station(
     for sign in [-1.0f32, 1.0f32] {
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::Box::new(30.0, 0.3, 15.0).into()),
+                mesh: meshes.add(Mesh::from(shape::Box::new(30.0, 0.3, 15.0))),
                 material: gold_mat.clone(),
                 transform: Transform::from_translation(base + Vec3::new(0.0, 2.0, sign * 40.0)),
                 ..default()
@@ -180,7 +180,7 @@ fn setup_station(
     commands.spawn((
         PbrBundle {
             mesh: meshes.add(
-                shape::Cylinder { radius: 3.0, height: 4.0, resolution: 12, segments: 1 }.into(),
+                Mesh::from(shape::Cylinder { radius: 3.0, height: 4.0, resolution: 12, segments: 1 }),
             ),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.3, 0.3, 0.35),
@@ -198,7 +198,7 @@ fn setup_station(
     // Telescope (Observation Dome)
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Cylinder { radius: 0.5, height: 3.0, resolution: 8, segments: 1 }.into()),
+            mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 0.5, height: 3.0, resolution: 8, segments: 1 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.2, 0.2, 0.3),
                 metallic: 0.8,
@@ -219,7 +219,7 @@ fn setup_station(
     let plant_pos = base + Vec3::new(26.0, 0.5, 0.0);
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 0.8, sectors: 8, stacks: 6 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 0.8, sectors: 8, stacks: 6 })),
             material: materials.add(StandardMaterial {
                 base_color: palette::TREE,
                 emissive: Color::rgb(0.1, 0.4, 0.2),
@@ -239,7 +239,7 @@ fn setup_station(
     // Control Panel (hub center)
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Box::new(2.0, 1.0, 0.3).into()),
+            mesh: meshes.add(Mesh::from(shape::Box::new(2.0, 1.0, 0.3))),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.1, 0.15, 0.25),
                 emissive: Color::rgb(0.0, 0.5, 1.0),
@@ -261,7 +261,7 @@ fn setup_station(
     let coffee_pos = base + Vec3::new(-24.0, 0.0, 0.0);
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Cylinder { radius: 0.4, height: 1.2, resolution: 8, segments: 1 }.into()),
+            mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 0.4, height: 1.2, resolution: 8, segments: 1 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.15, 0.1, 0.08),
                 metallic: 0.5,
@@ -289,7 +289,7 @@ fn setup_station(
             ..default()
         });
         let star_mesh =
-            meshes.add(shape::UVSphere { radius: 0.4, sectors: 4, stacks: 3 }.into());
+            meshes.add(Mesh::from(shape::UVSphere { radius: 0.4, sectors: 4, stacks: 3 }));
 
         for _ in 0..1500 {
             let phi: f32 = rng.gen_range(0.0f32..std::f32::consts::TAU);
@@ -364,7 +364,7 @@ fn setup_station(
     commands.spawn((
         PbrBundle {
             mesh: meshes.add(
-                shape::Capsule { radius: 0.5, depth: 1.5, ..default() }.into(),
+                Mesh::from(shape::Capsule { radius: 0.5, depth: 1.5, ..default() }),
             ),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.9, 0.92, 0.95),
@@ -397,7 +397,7 @@ fn setup_station(
 
 fn move_player(
     time: Res<Time>,
-    keys: Res<Input<KeyCode>>,
+    keys: Res<ButtonInput<KeyCode>>,
     mut player_q: Query<(&mut Transform, &mut StationPlayer)>,
     cam_q: Query<&Transform, (With<StationCamera>, Without<StationPlayer>)>,
 ) {
@@ -416,10 +416,10 @@ fn move_player(
 
     for (mut t, mut player) in &mut player_q {
         let mut move_dir = Vec3::ZERO;
-        if keys.pressed(KeyCode::W) { move_dir += cam_fwd; }
-        if keys.pressed(KeyCode::S) { move_dir -= cam_fwd; }
-        if keys.pressed(KeyCode::A) { move_dir -= cam_right; }
-        if keys.pressed(KeyCode::D) { move_dir += cam_right; }
+        if keys.pressed(KeyCode::KeyW) { move_dir += cam_fwd; }
+        if keys.pressed(KeyCode::KeyS) { move_dir -= cam_fwd; }
+        if keys.pressed(KeyCode::KeyA) { move_dir -= cam_right; }
+        if keys.pressed(KeyCode::KeyD) { move_dir += cam_right; }
 
         if move_dir.length_squared() > 0.0 {
             move_dir = move_dir.normalize();
@@ -468,7 +468,7 @@ fn update_station_camera(
 }
 
 fn check_interactions(
-    keys: Res<Input<KeyCode>>,
+    keys: Res<ButtonInput<KeyCode>>,
     player_q: Query<&Transform, With<StationPlayer>>,
     mut interactables: Query<(&Transform, &mut Interactable), Without<StationPlayer>>,
     mut commands: Commands,
@@ -480,7 +480,7 @@ fn check_interactions(
 
     for (it, mut interactable) in &mut interactables {
         let dist = player_pos.distance(it.translation);
-        if dist <= INTERACT_RANGE && keys.just_pressed(KeyCode::E) && !interactable.triggered {
+        if dist <= INTERACT_RANGE && keys.just_pressed(KeyCode::KeyE) && !interactable.triggered {
             interactable.triggered = true;
             trigger_interaction(&interactable.action, it.translation, &mut commands, &mut meshes, &mut materials);
         }
@@ -499,7 +499,7 @@ fn trigger_interaction(
             // Grow effect — spawn a bigger sphere briefly
             commands.spawn((
                 PbrBundle {
-                    mesh: meshes.add(shape::UVSphere { radius: 1.4, sectors: 8, stacks: 6 }.into()),
+                    mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 1.4, sectors: 8, stacks: 6 })),
                     material: materials.add(StandardMaterial {
                         base_color: Color::rgb(0.2, 0.7, 0.3),
                         emissive: Color::rgb(0.3, 1.0, 0.4),
@@ -517,7 +517,7 @@ fn trigger_interaction(
                 let offset = Vec3::new(i as f32 * 0.1 - 0.2, i as f32 * 0.5 + 1.0, 0.0);
                 commands.spawn((
                     PbrBundle {
-                        mesh: meshes.add(shape::UVSphere { radius: 0.12, sectors: 6, stacks: 4 }.into()),
+                        mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 0.12, sectors: 6, stacks: 4 })),
                         material: materials.add(StandardMaterial {
                             base_color: Color::rgb(0.7, 0.5, 0.3),
                             emissive: Color::rgb(0.4, 0.3, 0.1),

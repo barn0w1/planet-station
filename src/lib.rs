@@ -25,7 +25,6 @@ pub fn run() {
                     // On WASM, target the canvas element in index.html
                     #[cfg(target_arch = "wasm32")]
                     canvas: Some("#bevy-canvas".to_string()),
-                    fit_canvas_to_parent: true,
                     prevent_default_event_handling: false,
                     ..default()
                 }),

@@ -1,0 +1,5 @@
+[target.wasm32-unknown-unknown]
+# Disable reference-types WebAssembly proposal — prevents the
+# "WebAssembly.Table.grow(): failed to grow table" error in browsers
+# that partially support the proposal.
+rustflags = ["-C", "target-feature=-reference-types"]

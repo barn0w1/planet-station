@@ -42,7 +42,7 @@ fn setup_earth(
     // ── Ground disc ──────────────────────────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Cylinder { radius: 80.0, height: 0.5, resolution: 32, segments: 1 }.into()),
+            mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 80.0, height: 0.5, resolution: 32, segments: 1 })),
             material: materials.add(StandardMaterial {
                 base_color: palette::GROUND,
                 perceptual_roughness: 0.9,
@@ -58,7 +58,7 @@ fn setup_earth(
     // ── Elevator cable (thin glowing cyan cylinder) ───────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Cylinder { radius: 0.15, height: 5000.0, resolution: 8, segments: 1 }.into()),
+            mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 0.15, height: 5000.0, resolution: 8, segments: 1 })),
             material: materials.add(StandardMaterial {
                 base_color: palette::CABLE,
                 emissive: Color::rgb(0.0, 3.0, 4.0),
@@ -74,7 +74,7 @@ fn setup_earth(
     // ── Elevator cabin ───────────────────────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 1.2, sectors: 12, stacks: 8 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 1.2, sectors: 12, stacks: 8 })),
             material: materials.add(StandardMaterial {
                 base_color: palette::CABIN,
                 metallic: 0.2,
@@ -103,7 +103,7 @@ fn setup_earth(
     for (x, _y, z, r) in mountain_positions {
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::UVSphere { radius: *r, sectors: 6, stacks: 4 }.into()),
+                mesh: meshes.add(Mesh::from(shape::UVSphere { radius: *r, sectors: 6, stacks: 4 })),
                 material: materials.add(StandardMaterial {
                     base_color: palette::MOUNTAIN,
                     perceptual_roughness: 0.85,
@@ -127,7 +127,7 @@ fn setup_earth(
         // Trunk
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::Cylinder { radius: 0.3, height: 3.0, resolution: 6, segments: 1 }.into()),
+                mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 0.3, height: 3.0, resolution: 6, segments: 1 })),
                 material: materials.add(StandardMaterial {
                     base_color: Color::rgb(0.35, 0.22, 0.1),
                     perceptual_roughness: 0.9,
@@ -141,7 +141,7 @@ fn setup_earth(
         // Foliage (low-poly sphere)
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::UVSphere { radius: 1.8, sectors: 6, stacks: 4 }.into()),
+                mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 1.8, sectors: 6, stacks: 4 })),
                 material: materials.add(StandardMaterial {
                     base_color: palette::TREE,
                     perceptual_roughness: 0.8,
@@ -157,7 +157,7 @@ fn setup_earth(
     // ── Atmospheric haze sphere ───────────────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 200.0, sectors: 16, stacks: 12 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 200.0, sectors: 16, stacks: 12 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgba(0.039, 0.165, 0.431, 0.18),
                 alpha_mode: AlphaMode::Blend,
@@ -209,8 +209,8 @@ fn setup_earth(
 // ── Systems ──────────────────────────────────────────────────────────────────
 
 fn handle_earth_input(
-    keys: Res<Input<KeyCode>>,
-    mouse: Res<Input<MouseButton>>,
+    keys: Res<ButtonInput<KeyCode>>,
+    mouse: Res<ButtonInput<MouseButton>>,
     mut next_state: ResMut<NextState<GameState>>,
 ) {
     if keys.just_pressed(KeyCode::Space) || mouse.just_pressed(MouseButton::Left) {

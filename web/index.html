@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛸 Space Elevator Simulator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: monospace;
+    }
+    canvas#bevy-canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      outline: none;
+    }
+    #loading {
+      position: absolute;
+      color: #00E5FF;
+      font-family: monospace;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      text-align: center;
+      pointer-events: none;
+    }
+    #loading .sub {
+      font-size: 0.85rem;
+      color: #0066aa;
+      margin-top: 0.5rem;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+    #loading { animation: pulse 1.4s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    INITIALISING SPACE ELEVATOR…
+    <div class="sub">Loading systems</div>
+  </div>
+  <canvas id="bevy-canvas" tabindex="0"></canvas>
+  <script type="module">
+    import init from './pkg/space_elevator.js';
+    try {
+      await init();
+      const el = document.getElementById('loading');
+      if (el) el.remove();
+      document.getElementById('bevy-canvas').focus();
+    } catch (e) {
+      const el = document.getElementById('loading');
+      if (el) {
+        el.textContent = 'Failed to load: ' + e.message;
+        el.style.animationName = 'none';
+        el.style.color = '#ff4444';
+      }
+      console.error(e);
+    }
+  </script>
+</body>
+</html>

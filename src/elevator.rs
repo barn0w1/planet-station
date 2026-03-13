@@ -157,7 +157,7 @@ fn setup_ride(
     // ── Elevator cabin ───────────────────────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 1.2, sectors: 12, stacks: 8 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 1.2, sectors: 12, stacks: 8 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.91, 0.957, 0.975),
                 metallic: 0.2,
@@ -174,7 +174,7 @@ fn setup_ride(
     // ── Elevator cable ────────────────────────────────────────────────────────
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::Cylinder { radius: 0.12, height: 5000.0, resolution: 8, segments: 1 }.into()),
+            mesh: meshes.add(Mesh::from(shape::Cylinder { radius: 0.12, height: 5000.0, resolution: 8, segments: 1 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.0, 0.898, 1.0),
                 emissive: Color::rgb(0.0, 2.0, 3.0),
@@ -214,7 +214,7 @@ fn setup_ride(
 
         commands.spawn((
             PbrBundle {
-                mesh: meshes.add(shape::Cylinder { radius: cr, height: 0.6, resolution: 12, segments: 1 }.into()),
+                mesh: meshes.add(Mesh::from(shape::Cylinder { radius: cr, height: 0.6, resolution: 12, segments: 1 })),
                 material: materials.add(StandardMaterial {
                     base_color: Color::rgba(1.0, 1.0, 1.0, 0.65),
                     alpha_mode: AlphaMode::Blend,
@@ -274,23 +274,23 @@ fn ascend_elevator(
 }
 
 fn handle_ride_input(
-    keys: Res<Input<KeyCode>>,
+    keys: Res<ButtonInput<KeyCode>>,
     mut elevator: ResMut<ElevatorState>,
     time: Res<Time>,
 ) {
     // Speed control
-    if keys.pressed(KeyCode::Up) || keys.pressed(KeyCode::W) {
+    if keys.pressed(KeyCode::ArrowUp) || keys.pressed(KeyCode::KeyW) {
         elevator.speed_multiplier = (elevator.speed_multiplier + 1.5 * time.delta_seconds()).min(3.0);
     }
-    if keys.pressed(KeyCode::Down) || keys.pressed(KeyCode::S) {
+    if keys.pressed(KeyCode::ArrowDown) || keys.pressed(KeyCode::KeyS) {
         elevator.speed_multiplier = (elevator.speed_multiplier - 1.5 * time.delta_seconds()).max(0.5);
     }
 
     // Camera rotation
-    if keys.pressed(KeyCode::Left) || keys.pressed(KeyCode::A) {
+    if keys.pressed(KeyCode::ArrowLeft) || keys.pressed(KeyCode::KeyA) {
         elevator.camera_angle += 1.5 * time.delta_seconds();
     }
-    if keys.pressed(KeyCode::Right) || keys.pressed(KeyCode::D) {
+    if keys.pressed(KeyCode::ArrowRight) || keys.pressed(KeyCode::KeyD) {
         elevator.camera_angle -= 1.5 * time.delta_seconds();
     }
 }
@@ -335,7 +335,7 @@ fn spawn_stars_once(
         unlit: true,
         ..default()
     });
-    let star_mesh = meshes.add(shape::UVSphere { radius: 0.4, sectors: 4, stacks: 3 }.into());
+    let star_mesh = meshes.add(Mesh::from(shape::UVSphere { radius: 0.4, sectors: 4, stacks: 3 }));
 
     for _ in 0..2000 {
         // Place on sphere of radius 3000 centred at 0
@@ -373,7 +373,7 @@ fn spawn_earth_disc_once(
 
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 600.0, sectors: 24, stacks: 16 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 600.0, sectors: 24, stacks: 16 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.08, 0.35, 0.7),
                 emissive: Color::rgb(0.1, 0.4, 1.0),
@@ -402,7 +402,7 @@ fn spawn_station_preview_once(
     // Central hub glow
     commands.spawn((
         PbrBundle {
-            mesh: meshes.add(shape::UVSphere { radius: 10.0, sectors: 16, stacks: 10 }.into()),
+            mesh: meshes.add(Mesh::from(shape::UVSphere { radius: 10.0, sectors: 16, stacks: 10 })),
             material: materials.add(StandardMaterial {
                 base_color: Color::rgb(0.9, 0.92, 0.95),
                 emissive: Color::rgb(0.5, 0.6, 0.7),

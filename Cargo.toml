@@ -35,6 +35,8 @@ getrandom = { version = "0.2", features = ["js"] }
 getrandom3 = { package = "getrandom", version = ">=0.3, <0.4", features = ["wasm_js"] }
 # Force getrandom 0.4 to use JS backend on WASM (transitive dep)
 getrandom4 = { package = "getrandom", version = ">=0.4, <0.5", features = ["wasm_js"] }
+# `uuid` (used by bevy_asset) needs js source of randomness for WASM
+uuid = { version = "1", features = ["js"] }
 
 [profile.release]
 opt-level = "z"
